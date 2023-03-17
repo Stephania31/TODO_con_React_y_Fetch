@@ -43,7 +43,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ ...store, demo: demo })
 			},
 			...exampleActions(getStore, getActions, setStore), //this will brings here the function exampleFunction, and it will be able to use store's states and actions
-			...usuarioActions(getStore, getActions, setStore)
+			...usuarioActions(getStore, getActions, setStore),
+			useFetch: async (endpoint, body, method = "GET") => {
+				let url = process.env.BACKEND_URL + endpoint
+				console.log(url)
+				let response = await fetch(url, {
+					method: method,
+					headers: { "Content-Type": "application/json" },
+					body: body ? JSON.stringify(body) : null
+				})
+
+				let respuestaJson = await response.json()
+
+				return { respuestaJson, response }
+
+			},
 		}
 	};
 };
