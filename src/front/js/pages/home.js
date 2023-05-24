@@ -5,22 +5,13 @@ import "../../styles/home.css";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
-  const [todos, setTodos] = useState([
-    {
-      label: "Comprar comida",
-      done: false,
-    },
-    {
-      label: "Ir a yoga",
-      done: false,
-    },
-  ]);
+  const [todos, setTodos] = useState([]);
   const [user, setUser] = useState("");
 
   useEffect(() => {
     const cargaDeDatos = async () => {
       let { respuestaJson, response } = await actions.useFetch(
-        "/apis/fake/todos/user/Stephania31"
+        "/todos/user/Stephania31"
       );
       console.log(respuestaJson);
       setTodos(respuestaJson);
@@ -34,11 +25,11 @@ export const Home = () => {
     let { respuestaJson, response } = await actions.useFetch(
       "/todos/user/Stephania31",
       arrTemp,
-      "POST"
+      "PUT"
     );
 
     if (response.ok) {
-      setTodos(arrTemp);
+      setTodos(respuestaJson);
     } else {
       alert("Hubo un error, inténtalo de nuevo");
     }
