@@ -9,15 +9,15 @@ export const Home = () => {
   const [user, setUser] = useState("");
 
   useEffect(() => {
-    const cargaDeDatos = async () => {
-      let { respuestaJson, response } = await actions.useFetch(
-        "/todos/user/Stephania31"
-      );
-      console.log(respuestaJson);
-      setTodos(respuestaJson);
-    };
     cargaDeDatos();
   }, []);
+  const cargaDeDatos = async () => {
+    let { respuestaJson, response } = await actions.useFetch(
+      "/todos/user/Stephania31"
+    );
+    console.log(respuestaJson);
+    setTodos(respuestaJson);
+  };
 
   const eliminar = async (i) => {
     let arrTemp = todos.filter((item, index) => index !== i);
@@ -29,7 +29,7 @@ export const Home = () => {
     );
 
     if (response.ok) {
-      setTodos(respuestaJson);
+      cargaDeDatos();
     } else {
       alert("Hubo un error, inténtalo de nuevo");
     }
@@ -40,8 +40,8 @@ export const Home = () => {
   return (
     <div className="container justify-content-center align-items-center  w-50  mt-4 ">
       <h1 className="titulo row d-flex justify-content-center mb-4 text-danger text-opacity-25 display-1">
-        to do list
-      </h1>
+        to do list{" "}
+      </h1>{" "}
       <br />
       <div className="row d-flex justify-content-center my-4 shadow-lg p-3 mb-5">
         <input
@@ -52,7 +52,7 @@ export const Home = () => {
               setUser(e.target.value);
             }
           }}
-        ></input>
+        ></input>{" "}
         <br />
         <input
           type="text"
@@ -71,26 +71,28 @@ export const Home = () => {
               ]);
             }
           }}
-        ></input>
+        ></input>{" "}
         {todos && todos.length > 0 ? (
           <ul>
+            {" "}
             {todos.map((item, index) => (
               <li key={index}>
-                {item.label}
+                {" "}
+                {item.label}{" "}
                 <button
                   className="ocultar"
                   type="button"
                   onClick={() => eliminar(index)}
                 >
-                  <i className="fas fa-times"></i>
-                </button>
+                  <i className="fas fa-times"> </i>{" "}
+                </button>{" "}
               </li>
-            ))}
+            ))}{" "}
           </ul>
         ) : (
-          <>No hay tareas por hacer</>
-        )}
-      </div>
+          <> No hay tareas por hacer </>
+        )}{" "}
+      </div>{" "}
     </div>
   );
 };
